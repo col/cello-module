@@ -1,9 +1,9 @@
 function SetupGame() {
   this.answer = [0,1,2,3];
-  this.randomnizeAnswer();
+  this.randomiseAnswer();
 }
 
-SetupGame.prototype.randomnizeAnswer = function() {
+SetupGame.prototype.randomiseAnswer = function() {
   this.answer = shuffle(this.answer);
 };
 
