@@ -1,6 +1,7 @@
 var _ = require("lodash");
 var awsIot = require('aws-iot-device-sdk');
 var Gpio = require('chip-gpio').Gpio;
+var SetupGame = require('SetupGame');
 
 var deviceName = "cello-chip";
 var deviceCredentials = {
@@ -26,8 +27,10 @@ var redLED = new Gpio(7, 'out');
 var LED_ON = 0;
 var LED_OFF = 1;
 
+var game = new SetupGame();
+
 var buttonSequence = [];
-var correctAnswer = [0, 3, 1, 2];
+var correctAnswer = game.answer;
 
 function watchButtons() {
   for (var i = 0; i < buttons.length; i++) {
