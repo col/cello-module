@@ -27,7 +27,7 @@ var LED_ON = 0;
 var LED_OFF = 1;
 
 var buttonSequence = [];
-var correctAnswer = [];
+var correctAnswer = [0,1,2,3];
 
 function watchButtons() {
   for (var i = 0; i < buttons.length; i++) {
