@@ -95,10 +95,11 @@ device.on('message', function(topic, payload) {
         arm();
         break;
       case "config":
-      case "reset":
         if (payload.device && payload.device === deviceName) {
           config(payload.data);
         }
+        break;
+      case "reset":
         reset();
         break;
     }
