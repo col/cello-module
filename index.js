@@ -1,7 +1,6 @@
 var _ = require("lodash");
 var awsIot = require('aws-iot-device-sdk');
 var Gpio = require('chip-gpio').Gpio;
-var SetupGame = require('SetupGame');
 
 var deviceName = "cello-chip";
 var deviceCredentials = {
@@ -27,10 +26,8 @@ var redLED = new Gpio(7, 'out');
 var LED_ON = 0;
 var LED_OFF = 1;
 
-var game = new SetupGame();
-
 var buttonSequence = [];
-var correctAnswer = game.answer;
+var correctAnswer = [];
 
 function watchButtons() {
   for (var i = 0; i < buttons.length; i++) {
@@ -77,6 +74,12 @@ function arm() {
   device.publish(mainTopic, JSON.stringify({ event: 'armed', device: deviceName }));
 }
 
+function config(data) {
+  console.log("Config", data)
+  correctAnswer = data.answer
+  device.publish(mainTopic, JSON.stringify({ event: "configured", device: deviceName, data: data}))
+}
+
 function reset() {
   console.log("Reset.");
   greenLED.write(LED_OFF);
@@ -91,7 +94,11 @@ device.on('message', function(topic, payload) {
       case "arm":
         arm();
         break;
+      case "config":
       case "reset":
+        if (payload.device && payload.device === deviceName) {
+          config(payload.data);
+        }
         reset();
         break;
     }
