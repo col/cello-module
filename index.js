@@ -76,10 +76,8 @@ function arm() {
 
 function config(data) {
   console.log("Config", data)
-  if (data.device === 'cello-chip') {
-    correctAnswer = data.answer
-    device.publish(mainTopic, JSON.stringify({ event: "configured", device: deviceName, data: data}))
-  }
+  correctAnswer = data.answer
+  device.publish(mainTopic, JSON.stringify({ event: "configured", device: deviceName, data: data}))
 }
 
 function reset() {
