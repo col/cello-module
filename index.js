@@ -71,13 +71,14 @@ function arm() {
   console.log("Armed!");
   greenLED.write(LED_OFF);
   redLED.write(LED_ON);
+  buttonSequence = [];
   device.publish(mainTopic, JSON.stringify({ event: 'armed', device: deviceName }));
 }
 
 function config(data) {
-  console.log("Config", data)
-  correctAnswer = data.answer
-  device.publish(mainTopic, JSON.stringify({ event: "configured", device: deviceName, data: data}))
+  console.log("Config", data);
+  correctAnswer = data.answer;
+  device.publish(mainTopic, JSON.stringify({ event: "configured", device: deviceName, data: data}));
 }
 
 function reset() {
@@ -87,8 +88,6 @@ function reset() {
 }
 
 device.on('message', function(topic, payload) {
-    console.log('Message Received - Topic: ' + topic + ' Payload: ' + payload.toString());
-
     payload = JSON.parse(payload);
     switch (payload.event) {
       case "arm":
